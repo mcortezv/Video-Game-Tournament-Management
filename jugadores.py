@@ -1,4 +1,6 @@
-import utilerias as modulo_utilerias
+import utilerias
+
+jugadores = list()
 
 def registrar(jugadores:list) -> None:
     apodo = modulo_utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")

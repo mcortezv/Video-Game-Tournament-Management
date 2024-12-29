@@ -1,4 +1,6 @@
-import utilerias as modulo_utilerias
+import utilerias
+
+equipos = list()
 
 def registrar(equipos:list, jugadores:list) -> None:
     if len(jugadores) > 1:

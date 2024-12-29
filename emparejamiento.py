@@ -1,4 +1,7 @@
-import utilerias as modulo_utilerias, torneos as modulo_torneos, random
+import utilerias, torneos, random
+
+emparejamientos = list()
+fases = {"itson": ["ITSON Championship", 1, None], "racing": ["Racing Rivals", 1, None], "strike": ["Strike Showdown", 1, None], "champions": ["Champions Cup", 1, None], "smash": ["Smash Showdown", 1, None]}
 
 def generar(torneos_disponibles:list, emparejamientos:list, itson_inscritos:list, racing_inscritos:list, strike_inscritos:list, champions_inscritos:list, smash_inscritos:list, itson_resultados:list, racing_resultados:list, strike_resultados:list, champions_resultados:list, smash_resultados:list, jugadores:list, equipos:list, fases:dict) -> None:
     nombre_torneo = input("Ingrese el Nombre del Torneo: ")

@@ -1,4 +1,18 @@
-import utilerias as modulo_utilerias, textwrap
+import utilerias, textwrap
+
+TORNEO_INDIVIDUAL= 16 
+TORNEO_EQUIPO = 8
+
+torneos_disponibles = [
+        {"datos": ("ITSON Championship", "League of Legends", "Equipos de cinco jugadores se enfrentarán en la Grieta del Invocador para demostrar sus habilidades estratégicas y de trabajo en equipo en este popular MOBA.", TORNEO_EQUIPO), "estado": "Inscripción Abierta"},
+        {"datos": ("Racing Rivals", "Mario Kart", "Los estudiantes de ITSON competirán en divertidas y frenéticas carreras de Mario Kart, donde la velocidad y el uso inteligente de los ítems serán clave para la victoria.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"},
+        {"datos": ("Strike Showdown", "Counter-Strike: Global Offensive ", "Equipos de cinco jugadores se enfrentarán en intensos combates de disparos en primera persona para demostrar quién es el mejor en estrategia y puntería en ITSON.", TORNEO_EQUIPO), "estado": "Inscripción Abierta"},
+        {"datos": ("Champions Cup", "FIFA", "Un torneo de fútbol virtual donde los mejores jugadores de FIFA de ITSON competirán por el título de campeón en emocionantes partidos llenos de goles y tácticas.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"},
+        {"datos": ("Smash Showdown", "Super Smash Bros. Ultimate", "Los mejores luchadores de ITSON se enfrentarán en intensos combates en el popular juego de lucha Super Smash Bros. Ultimate, donde solo uno saldrá victorioso entre la multitud de personajes icónicos.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"}]
+
+itson_inscritos, racing_inscritos, strike_inscritos, champions_inscritos, smash_inscritos = list(), list(), list(), list(), list()
+itson_resultados, racing_resultados, strike_resultados, champions_resultados, smash_resultados = list(), list(), list(), list(), list()
+
 
 def inscribir(equipos:list, jugadores:list, torneos_disponibles:dict, itson_inscritos:list, racing_inscritos:list, strike_inscritos:list, champions_inscritos:list, smash_inscritos:list, itson_resultados:list, racing_resultados:list, strike_resultados:list, champions_resultados:list, smash_resultados:list, TORNEO_INDIVIDUAL:int, TORNEO_EQUIPO:int) -> None:
     if len(jugadores) > 0:
