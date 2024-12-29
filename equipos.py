@@ -1,16 +1,17 @@
-import utilerias
+import utilerias, jugadores
 
 equipos = list()
+jugadores = jugadores.retornar_lista_jugadores()
 
-def registrar(equipos:list, jugadores:list) -> None:
+def registrar() -> None:
     if len(jugadores) > 1:
         nombre_equipo = input("Ingrese el Nombre del Equipo: ")
-        validar_nombre_equipo = modulo_utilerias.validar_equipo(equipos, nombre_equipo)
+        validar_nombre_equipo = utilerias.validar_equipo(equipos, nombre_equipo)
         if validar_nombre_equipo == True:
             print("\n-------------------------------------------------------\nEl Equipo ya se Encuentra Registrado")
         else:
             capitan = input("Ingrese el Apodo del Capitan: ")
-            validar_capitan = modulo_utilerias.validar_jugador(jugadores, capitan)
+            validar_capitan = utilerias.validar_jugador(jugadores, capitan)
             if validar_capitan == False:
                 print("\n-------------------------------------------------------\nEl Capitan no se Encuentra en el Registro de Jugadores")
             else:
@@ -24,7 +25,7 @@ def registrar(equipos:list, jugadores:list) -> None:
                             print("\n-------------------------------------------------------\nEl Capitan no Puede ser un Miembro del Equipo")
                             break
                         else:
-                            validar_miembro = modulo_utilerias.validar_jugador(jugadores, miembro)
+                            validar_miembro = utilerias.validar_jugador(jugadores, miembro)
                             if validar_miembro == False:
                                 print("\n-------------------------------------------------------\nEl Jugador: {} no se Encuentra Registrado en la Lista de Jugadores".format(miembro))
                                 break
@@ -41,19 +42,33 @@ def registrar(equipos:list, jugadores:list) -> None:
                                             "derrotas": 0}
                                 equipos.append(equipo)
                                 print("\n-------------------------------------------------------\nSe ha Registrado al Equipo: {} y se ha Actualizado el Registro de Equipos: \n".format(nombre_equipo))
-                                modulo_utilerias.mostrar_equipos(equipos)
+                                mostrar()
                                 input("Enter para Continuar...")
                             elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro de Equipo Cancelado")
     if len(jugadores) <= 1:
         print("\n-------------------------------------------------------\nNo se Cuenta Con el Minimo de Jugadores Registrado para un Crear un Equipo")
 
+def mostrar() -> None:
+    if len(equipos) > 0:
+        equipos_ordenados = sorted(equipos, key = lambda x: x["puntos"], reverse = True)
+        titulo = ["Nombre Equipo", "Capitan", "Miembros"]
+        print(f"\n--------------------------------------------------------------------------------\n{titulo[0]:^20}|{titulo[1]:^15}|\t{titulo[2]}\n--------------------------------------------------------------------------------\n")
+        for i in range(len(equipos_ordenados)):
+            print(f"{equipos_ordenados[i]["nombre_equipo"]:^20}|{equipos_ordenados[i]["capitan"]:^15}|", end="\t")
+            for indice, miembro in enumerate(equipos_ordenados[i]["miembros"]):
+                    if indice == len(equipos_ordenados[i]["miembros"]) - 1:
+                        print(miembro)
+                    else: print("{}".format(miembro), end=", ")
+            print("\n--------------------------------------------------------------------------------\n")
+        print("Cantidad Total de Equipos Registrados: {}\n".format(len(equipos_ordenados)))
+    else:
+        print("\n-------------------------------------------------------\nEl Registro de Equipos Esta Vacio")
 
 
-
-def actualizar(equipos:list, jugadores:list) -> None:
+def actualizar() -> None:
     if len(equipos) > 0:
         nombre_equipo = input("Ingrese el Nombre del Equipo a Actualizar: ")
-        validar = modulo_utilerias.validar_equipo(equipos, nombre_equipo)
+        validar = utilerias.validar_equipo(equipos, nombre_equipo)
         if validar == False:
             print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
         else:
@@ -72,8 +87,8 @@ def actualizar(equipos:list, jugadores:list) -> None:
 2. Eliminar Miembro\n""")
                         if opcion == "1":
                             nuevo_miembro = input("Ingrese el Apodo del Jugador a Agregar: ")
-                            validar_miembro_en_lista_de_jugadores = modulo_utilerias.validar_jugador(jugadores, nuevo_miembro)
-                            validar_miembro_en_equipo_actual = modulo_utilerias.validar_miembro_equipo_actual(equipo, nuevo_miembro)
+                            validar_miembro_en_lista_de_jugadores = utilerias.validar_jugador(jugadores, nuevo_miembro)
+                            validar_miembro_en_equipo_actual = utilerias.validar_miembro_equipo_actual(equipo, nuevo_miembro)
                             capitan = equipo["capitan"]
                             if validar_miembro_en_lista_de_jugadores == True and validar_miembro_en_equipo_actual == False and capitan != nuevo_miembro:
                                 confirmar = ""
@@ -82,7 +97,7 @@ def actualizar(equipos:list, jugadores:list) -> None:
                                     if confirmar.lower() == "s":
                                         equipo["miembros"].append(nuevo_miembro)
                                         print("\n-------------------------------------------------------\nSe ha Registrado al Jugador: {} en el Equipo: {} \n".format(nuevo_miembro, equipo["nombre_equipo"]))
-                                        modulo_utilerias.mostrar_equipos(equipos)
+                                        mostrar()
                                         preguntar = False
                                         break
                                     elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nActualizacion de Equipo Cancelada")
@@ -99,8 +114,8 @@ def actualizar(equipos:list, jugadores:list) -> None:
                                 break
                         elif opcion == "2": 
                             eliminar_miembro = input("Ingrese el Apodo del Jugador a Eliminar: ")
-                            validar_miembro_en_lista_de_jugadores = modulo_utilerias.validar_jugador(jugadores, eliminar_miembro)
-                            validar_miembro_en_equipo_actual = modulo_utilerias.validar_miembro_equipo_actual(equipo, eliminar_miembro)
+                            validar_miembro_en_lista_de_jugadores = utilerias.validar_jugador(jugadores, eliminar_miembro)
+                            validar_miembro_en_equipo_actual = utilerias.validar_miembro_equipo_actual(equipo, eliminar_miembro)
                             capitan = equipo["capitan"]
                             if validar_miembro_en_lista_de_jugadores == True and validar_miembro_en_equipo_actual == True and capitan != eliminar_miembro and len(equipo["miembros"]) > 1:
                                 confirmar = ""
@@ -109,7 +124,7 @@ def actualizar(equipos:list, jugadores:list) -> None:
                                     if confirmar.lower() == "s":
                                         equipo["miembros"].remove(eliminar_miembro)
                                         print("\n-------------------------------------------------------\nSe ha Eliminado al Jugador: {} del Equipo: {} \n".format(eliminar_miembro, equipo["nombre_equipo"]))
-                                        modulo_utilerias.mostrar_equipos(equipos)
+                                        mostrar()
                                         input("Enter para Continuar...")
                                         preguntar = False
                                         break
@@ -138,10 +153,10 @@ def actualizar(equipos:list, jugadores:list) -> None:
 
 
 
-def eliminar(equipos:list) -> None:
+def eliminar() -> None:
     if len(equipos) > 0:
         nombre_equipo = input("Ingrese el Nombre del Equipo a Eliminar: ")
-        validar = modulo_utilerias.validar_equipo(equipos, nombre_equipo)
+        validar = utilerias.validar_equipo(equipos, nombre_equipo)
         if validar == False:
             print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
         else:
@@ -161,7 +176,7 @@ def eliminar(equipos:list) -> None:
                 if confirmar.lower() == "s":
                     del equipos[equipo_eliminar]
                     print("Se ha Eliminado al Equipo {} y el Registro de Equipos ha Sido Actualizado\n".format(nombre_equipo))
-                    modulo_utilerias.mostrar_equipos(equipos)
+                    mostrar()
                     input("Enter para Continuar...")
                 elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nEliminacion de Equipo Cancelada")
     elif len(equipos) == 0:

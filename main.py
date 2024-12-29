@@ -1,7 +1,6 @@
-import jugadores, equipos, torneos, emparejamiento, utilerias
+import jugadores, equipos, torneos, emparejamientos, utilerias
 
 def main():
-    
     while True:
         opcion = input("""\nSeleccione una opcion del Menú:\n    
             1. Registrar Nuevo Jugador
@@ -33,7 +32,7 @@ def main():
         elif opcion == "6":
             jugadores.mostrar()
         elif opcion == "7":
-            utilerias.mostrar_equipos()
+            equipos.mostrar()
         elif opcion == "8":
             torneos.mostrar_torneos_disponibles()
         elif opcion == "9":
@@ -48,5 +47,5 @@ def main():
             print("Opcion no Valida, Ingrese una del 1 al 13")
             continue
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

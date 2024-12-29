@@ -2,16 +2,16 @@ import utilerias
 
 jugadores = list()
 
-def registrar(jugadores:list) -> None:
-    apodo = modulo_utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")
-    validar = modulo_utilerias.validar_jugador(jugadores, apodo)
+def registrar() -> None:
+    apodo = utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")
+    validar = utilerias.validar_jugador(jugadores, apodo)
     if validar == True:
         print("\n-------------------------------------------------------\nEl Jugador ya se Encuentra Registrado")
     else:
         puntos, victorias, derrotas, confirmar = 0, 0, 0, ""
-        id = modulo_utilerias.pedir_dato("Ingrese el ID del Jugador: ")
-        nombre = modulo_utilerias.pedir_dato("Ingrese el Nombre Real del Jugador: ")
-        carrera = modulo_utilerias.pedir_dato("Ingrese la Carrera del Jugador: ")
+        id = utilerias.pedir_dato("Ingrese el ID del Jugador: ")
+        nombre = utilerias.pedir_dato("Ingrese el Nombre Real del Jugador: ")
+        carrera = utilerias.pedir_dato("Ingrese la Carrera del Jugador: ")
         print("Puntos Iniciales del Jugador: {} \nNumero Inicial de Victorias: {} \nNumero Inicial de Derrotas: {}".format(puntos, victorias, derrotas))
         while confirmar.lower() != "s" and confirmar.lower() != "n":
             confirmar = input("\n-------------------------------------------------------\nConfirmar Registro (SI = S / NO = N): ")
@@ -27,11 +27,10 @@ def registrar(jugadores:list) -> None:
                 jugadores.append(jugador)
                 print("\n-------------------------------------------------------\nSe ha Registrado al Jugador: {} y se ha Actualizado el Registro de Jugadores: \n".format(apodo))
             elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
-        mostrar(jugadores)
+        mostrar()
     
     
-    
-def mostrar(jugadores:list) -> None:
+def mostrar() -> None:
     if len(jugadores) > 0:
         jugadores_ordenados = sorted(jugadores, key = lambda x: x["puntos"], reverse = True)
         titulo = ["ID", "Nombre", "Apodo", "Carrera", "Puntos", "Victorias", "Derrotas", "Torneos Inscritos", "Ninguno"]
@@ -49,3 +48,6 @@ def mostrar(jugadores:list) -> None:
         print("Cantidad Total de Jugadores Registrados: {}\n".format(len(jugadores_ordenados)))
     else:
         print("\n-------------------------------------------------------\nEl Registro de Jugadores Esta Vacio")
+        
+def retornar_lista_jugadores():
+    return jugadores

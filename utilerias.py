@@ -1,4 +1,3 @@
-
 def pedir_dato(texto:str) -> str:
     while True:
         dato_entrada = input(texto)
@@ -6,6 +5,12 @@ def pedir_dato(texto:str) -> str:
             return dato_entrada
         else: 
             print("-------------------------------------------------------\nEl Dato no Puede Estar Vacio, Ingreselo de Nuevo\n")
+
+def validar_jugador(jugadores:list, apodo:str) -> bool:
+    for jugador in jugadores:
+        if jugador["apodo"] == apodo:
+            return True
+    return False
 
 
 def pedir_numero_entero(texto:str) -> int:
@@ -16,12 +21,6 @@ def pedir_numero_entero(texto:str) -> int:
         except ValueError:
             print("-------------------------------------------------------\nFase no Valida, Ingrese un número entero\n")
 
-
-def validar_jugador(jugadores:list, apodo:str) -> bool:
-    for jugador in jugadores:
-        if jugador["apodo"] == apodo:
-            return True
-    return False
 
 
 def validar_equipo(equipos:list, nombre_equipo:str) -> bool:
@@ -95,23 +94,6 @@ def validar_equipo_en_torneo(nombre_equipo:str, nombre_torneo:str, itson_inscrit
             if equipo["nombre_equipo"] == nombre_equipo:
                 return True
         return False
-
-
-def mostrar_equipos(equipos:list) -> None:
-    if len(equipos) > 0:
-        equipos_ordenados = sorted(equipos, key = lambda x: x["puntos"], reverse = True)
-        titulo = ["Nombre Equipo", "Capitan", "Miembros"]
-        print(f"\n--------------------------------------------------------------------------------\n{titulo[0]:^20}|{titulo[1]:^15}|\t{titulo[2]}\n--------------------------------------------------------------------------------\n")
-        for i in range(len(equipos_ordenados)):
-            print(f"{equipos_ordenados[i]["nombre_equipo"]:^20}|{equipos_ordenados[i]["capitan"]:^15}|", end="\t")
-            for indice, miembro in enumerate(equipos_ordenados[i]["miembros"]):
-                    if indice == len(equipos_ordenados[i]["miembros"]) - 1:
-                        print(miembro)
-                    else: print("{}".format(miembro), end=", ")
-            print("\n--------------------------------------------------------------------------------\n")
-        print("Cantidad Total de Equipos Registrados: {}\n".format(len(equipos_ordenados)))
-    else:
-        print("\n-------------------------------------------------------\nEl Registro de Equipos Esta Vacio")
 
 
 def mostrar_torneos_activos(torneos_disponibles:list) -> None:
