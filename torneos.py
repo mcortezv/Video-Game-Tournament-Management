@@ -10,6 +10,9 @@ torneos_disponibles = [
         {"datos": ("Champions Cup", "FIFA", "Un torneo de fútbol virtual donde los mejores jugadores de FIFA de ITSON competirán por el título de campeón en emocionantes partidos llenos de goles y tácticas.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"},
         {"datos": ("Smash Showdown", "Super Smash Bros. Ultimate", "Los mejores luchadores de ITSON se enfrentarán en intensos combates en el popular juego de lucha Super Smash Bros. Ultimate, donde solo uno saldrá victorioso entre la multitud de personajes icónicos.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"}]
 
+inscritos = {"itson": list(), "racing": list(), "strike": list(), "champions": list(), "smash": list()}
+resultados = {"itson": list(), "racing": list(), "strike": list(), "champions": list(), "smash": list()}
+
 itson_inscritos, racing_inscritos, strike_inscritos, champions_inscritos, smash_inscritos = list(), list(), list(), list(), list()
 itson_resultados, racing_resultados, strike_resultados, champions_resultados, smash_resultados = list(), list(), list(), list(), list()
 
@@ -375,3 +378,67 @@ def mostrar_top_equipos_torneo(nombre_torneo:str, itson_resultados:list, strike_
                             print(miembro)
                         else: print("{}".format(miembro), end=", ")
                     print("\n----------------------------------------------------------------------------------------------------------------------\n")
+                    
+
+def validar_torneo(torneos_disponibles:list, nombre_torneo:str) -> bool:
+    for torneo in torneos_disponibles:
+        if torneo["datos"][0] == nombre_torneo:
+            return True
+    return False
+
+
+def mostrar_torneos_activos(torneos_disponibles:list) -> None:
+    titulo = ["Nombre del Torneo", "Videojuego", "Tope de Jugadores"]
+    print(f"\nTorneos Activos:\n-----------------------------------------------------------------------------------------\n{titulo[0]:^24}|{titulo[1]:^40}|{titulo[2]:^24}\n-----------------------------------------------------------------------------------------\n")
+    for torneo in torneos_disponibles:
+        if torneo["estado"] == "Inscripción Abierta":
+            if torneo["datos"][3] == 10:
+                texto = " Equipos"
+            else: texto = " Jugadores"
+            print(f"{torneo["datos"][0]:^24}|{torneo["datos"][1]:^40}|{torneo["datos"][3]:>8}{texto:<12}")
+        else: continue
+        print("\n-----------------------------------------------------------------------------------------\n")
+        
+        
+def validar_equipo_en_torneo(nombre_equipo:str, nombre_torneo:str, itson_inscritos:list, strike_inscritos:list) -> bool:
+    if nombre_torneo == "ITSON Championship":
+        for equipo in itson_inscritos:
+            if equipo["nombre_equipo"] == nombre_equipo:
+                return True
+        return False
+    elif nombre_torneo == "Strike Showdown":
+        for equipo in strike_inscritos:
+            if equipo["nombre_equipo"] == nombre_equipo:
+                return True
+        return False
+    
+
+def validar_estado_torneo(torneos_disponibles:list, nombre_torneo:str) -> str:
+    for torneo in torneos_disponibles:
+        if torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Inscripción Abierta":
+            estado = "Inscripción Abierta"
+        elif torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Cerrado":
+            estado = "Cerrado"
+        elif torneo["datos"][0] == nombre_torneo and torneo["estado"] == "En Curso":
+            estado = "En Curso"
+        elif torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Finalizado":
+            estado = "Finalizado"
+    return estado
+
+
+def validar_jugador_en_torneo(apodo:str, nombre_torneo:str, racing_inscritos:list, champions_inscritos:list, smash_inscritos:list) -> bool:
+    if nombre_torneo == "Racing Rivals":
+        for jugador in racing_inscritos:
+            if jugador["apodo"] == apodo:
+                return True
+        return False
+    elif nombre_torneo == "Champions Cup":
+        for jugador in champions_inscritos:
+            if jugador["apodo"] == apodo:
+                return True
+        return False
+    elif nombre_torneo == "Smash Showdown":
+        for jugador in smash_inscritos:
+            if jugador["apodo"] == apodo:
+                return True
+        return False

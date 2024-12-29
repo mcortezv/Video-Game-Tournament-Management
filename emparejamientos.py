@@ -436,3 +436,11 @@ def mostrar_emparejamientos(nombre_torneo:str, fases:int, emparejamientos:list) 
         for emparejamiento in emparejamientos:
             if emparejamiento["torneo"] == nombre_torneo:
                 print(f"{emparejamiento["jugador1"]:<20}{emparejamiento["jugador2"]:<20}\n")
+                
+
+def validar_registro_completado(nombre_torneo:str, fases:dict) -> bool:
+    for fase in fases.values():
+        if fase[0] == nombre_torneo:
+            if fase[2] == True or fase[2] == None:
+                return True
+    return False

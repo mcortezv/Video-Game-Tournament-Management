@@ -1,4 +1,4 @@
-import jugadores, equipos, torneos, emparejamientos, utilerias
+import jugadores, equipos, torneos, emparejamientos
 
 def main():
     while True:
