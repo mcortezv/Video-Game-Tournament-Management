@@ -1,7 +1,5 @@
 import utilerias
-
 jugadores = list()
-
 
 def registrar() -> None:
     apodo = utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")
@@ -29,8 +27,7 @@ def registrar() -> None:
                 print("\n-------------------------------------------------------\nSe ha Registrado al Jugador: {} y se ha Actualizado el Registro de Jugadores: \n".format(apodo))
                 mostrar()
     
-    
-    
+   
 def mostrar() -> None:
     if len(jugadores) < 0:
         print("\n-------------------------------------------------------\nEl Registro de Jugadores Esta Vacio")
@@ -50,7 +47,6 @@ def mostrar() -> None:
         print("Cantidad Total de Jugadores Registrados: {}\n".format(len(jugadores)))
         
         
-        
 def validar_jugador_registrado(apodo:str) -> bool:
     for jugador in jugadores:
         if jugador["apodo"] == apodo:
@@ -58,12 +54,10 @@ def validar_jugador_registrado(apodo:str) -> bool:
     return False
 
 
-
 def retornar_datos_jugador(apodo:str) -> dict:
     for jugador in jugadores:
         if jugador["apodo"] == apodo:
             return jugador
-
 
 
 def retornar_lista_jugadores() -> list:

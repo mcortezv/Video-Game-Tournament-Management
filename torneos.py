@@ -1,145 +1,147 @@
-import utilerias, textwrap
-
-TORNEO_INDIVIDUAL= 16 
+import jugadores, equipos, textwrap
+TORNEO_INDIVIDUAL = 16 
 TORNEO_EQUIPO = 8
 
-torneos_disponibles = [
-        {"datos": ("ITSON Championship", "League of Legends", "Equipos de cinco jugadores se enfrentarán en la Grieta del Invocador para demostrar sus habilidades estratégicas y de trabajo en equipo en este popular MOBA.", TORNEO_EQUIPO), "estado": "Inscripción Abierta"},
-        {"datos": ("Racing Rivals", "Mario Kart", "Los estudiantes de ITSON competirán en divertidas y frenéticas carreras de Mario Kart, donde la velocidad y el uso inteligente de los ítems serán clave para la victoria.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"},
-        {"datos": ("Strike Showdown", "Counter-Strike: Global Offensive ", "Equipos de cinco jugadores se enfrentarán en intensos combates de disparos en primera persona para demostrar quién es el mejor en estrategia y puntería en ITSON.", TORNEO_EQUIPO), "estado": "Inscripción Abierta"},
-        {"datos": ("Champions Cup", "FIFA", "Un torneo de fútbol virtual donde los mejores jugadores de FIFA de ITSON competirán por el título de campeón en emocionantes partidos llenos de goles y tácticas.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"},
-        {"datos": ("Smash Showdown", "Super Smash Bros. Ultimate", "Los mejores luchadores de ITSON se enfrentarán en intensos combates en el popular juego de lucha Super Smash Bros. Ultimate, donde solo uno saldrá victorioso entre la multitud de personajes icónicos.", TORNEO_INDIVIDUAL), "estado": "Inscripción Abierta"}]
+torneos_disponibles = {
+    "itson": {"nombre": "ITSON Championship", "juego": "League of Legends", "descripcion": "Equipos de cinco jugadores se enfrentarán en la Grieta del Invocador para demostrar sus habilidades estratégicas y de trabajo en equipo en este popular MOBA.", "tipo": "equipo", "cantidad_participantes": TORNEO_EQUIPO, "estado": "Inscripcion Abierta"},
+    "racing": {"nombre": "Racing Rivals", "juego": "Mario Kart", "descripcion": "Los estudiantes de ITSON competirán en divertidas y frenéticas carreras de Mario Kart, donde la velocidad y el uso inteligente de los ítems serán clave para la victoria.", "tipo": "individual", "cantidad_participantes": TORNEO_INDIVIDUAL, "estado": "Inscripcion Abierta"},
+    "strike": {"nombre": "Strike Showdown", "juego": "Counter-Strike: Global Offensive ", "descripcion": "Equipos de cinco jugadores se enfrentarán en intensos combates de disparos en primera persona para demostrar quién es el mejor en estrategia y puntería en ITSON.", "tipo": "equipo", "cantidad_participantes": TORNEO_EQUIPO, "estado": "Inscripcion Abierta"},
+    "champions": {"nombre": "Champions Cup", "juego": "FIFA", "descripcion": "Un torneo de fútbol virtual donde los mejores jugadores de FIFA de ITSON competirán por el título de campeón en emocionantes partidos llenos de goles y tácticas.", "tipo": "individual", "cantidad_participantes": TORNEO_INDIVIDUAL, "estado": "Inscripcion Abierta"},
+    "smash": {"nombre": "Smash Showdown", "juego": "Super Smash Bros. Ultimate", "descripcion": "Los mejores luchadores de ITSON se enfrentarán en intensos combates en el popular juego de lucha Super Smash Bros. Ultimate, donde solo uno saldrá victorioso entre la multitud de personajes icónicos.", "tipo": "individual", "cantidad_participantes": TORNEO_INDIVIDUAL, "estado": "Inscripcion Abierta"}
+}
 
 inscritos = {"itson": list(), "racing": list(), "strike": list(), "champions": list(), "smash": list()}
 resultados = {"itson": list(), "racing": list(), "strike": list(), "champions": list(), "smash": list()}
 
-itson_inscritos, racing_inscritos, strike_inscritos, champions_inscritos, smash_inscritos = list(), list(), list(), list(), list()
-itson_resultados, racing_resultados, strike_resultados, champions_resultados, smash_resultados = list(), list(), list(), list(), list()
 
-
-def inscribir(equipos:list, jugadores:list, torneos_disponibles:dict, itson_inscritos:list, racing_inscritos:list, strike_inscritos:list, champions_inscritos:list, smash_inscritos:list, itson_resultados:list, racing_resultados:list, strike_resultados:list, champions_resultados:list, smash_resultados:list, TORNEO_INDIVIDUAL:int, TORNEO_EQUIPO:int) -> None:
-    if len(jugadores) > 0:
-        validacion = True
-        while validacion == True:
-            modulo_utilerias.mostrar_torneos_activos(torneos_disponibles)
-            nombre_torneo = input("Ingrese el Nombre del Torneo: ")
-            validar_torneo = modulo_utilerias.validar_torneo(torneos_disponibles, nombre_torneo)
-            if validar_torneo == False:
-                print("\n-------------------------------------------------------\nEl Nombre No Corresponde a Ningun Torneo Disponible")
-            else:
-                validar_estado_torneo = modulo_utilerias.validar_estado_torneo(torneos_disponibles, nombre_torneo)
-                if validar_estado_torneo != "Inscripción Abierta":
-                    print("\n-------------------------------------------------------\nEl Torneo No se encuentra Disponible para Inscripcion")
-                else:
-                    confirmar = ""
-                    for torneo in torneos_disponibles:
-                        if torneo["datos"][0] == nombre_torneo:
-                            if torneo["datos"][3] == TORNEO_EQUIPO:
-                                print("El Torneo: {} es de Equipos".format(nombre_torneo))
-                                nombre_equipo = input("Ingrese el Nombre del Equipo: ")
-                                validar_equipo_en_torneo = modulo_utilerias.validar_equipo_en_torneo(nombre_equipo, nombre_torneo, itson_inscritos, strike_inscritos)
-                                if validar_equipo_en_torneo == True:
-                                    print("\n-------------------------------------------------------\nEl Equipo Ya Se Encuentra Registrado en Este Torneo")
-                                else:
-                                    validar_equipo_en_registro = modulo_utilerias.validar_equipo(equipos, nombre_equipo)
-                                    if validar_equipo_en_registro == False:
-                                        print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
-                                    else:
-                                        while confirmar.lower() != "s" and confirmar.lower() != "n":
-                                            confirmar = input("\n-------------------------------------------------------\nConfirmar Registro del Equipo: {} en el Torneo: {} (SI = S / NO = N): ".format(nombre_equipo, nombre_torneo))
-                                            if confirmar.lower() == "s":
-                                                indice, capitan, miembros = 0, "", list()
-                                                for i, equipo in enumerate(equipos):
-                                                    if equipo["nombre_equipo"] == nombre_equipo:
-                                                        indice = i
-                                                        capitan = equipo["capitan"]
-                                                        miembros = equipo["miembros"]
-                                                if nombre_torneo == "ITSON Championship":
-                                                    itson_inscritos.append(equipos[indice])
-                                                    itson_resultados.append(equipos[indice])
-                                                    print(itson_inscritos)
-                                                    for jugador in jugadores:
-                                                        if jugador["apodo"] == capitan:
-                                                            jugador["torneos"].append(nombre_torneo)
-                                                    for miembro in miembros:
-                                                        for jugador in jugadores:
-                                                            if jugador["apodo"] == miembro:
-                                                                jugador["torneos"].append(nombre_torneo)
-                                                    if len(itson_inscritos) == TORNEO_EQUIPO:
-                                                        for torneo in torneos_disponibles:
-                                                            if torneo["datos"][0] == nombre_torneo:
-                                                                torneo["estado"] = "Cerrado"
-                                                elif nombre_torneo == "Strike Showdown":
-                                                    strike_inscritos.append(equipos[indice])
-                                                    strike_resultados.append(equipos[indice])
-                                                    print(strike_inscritos)
-                                                    for jugador in jugadores:
-                                                        if jugador["apodo"] == capitan:
-                                                            jugador["torneos"].append(nombre_torneo)
-                                                    for miembro in miembros:
-                                                        for jugador in jugadores:
-                                                            if jugador["apodo"] == miembro:
-                                                                jugador["torneos"].append(nombre_torneo)
-                                                    if len(strike_inscritos) == TORNEO_EQUIPO:
-                                                        for torneo in torneos_disponibles:
-                                                            if torneo["datos"][0] == nombre_torneo:
-                                                                torneo["estado"] = "Cerrado"
-                                                mostrar_equipos_inscritos_torneo(nombre_torneo, itson_inscritos, strike_inscritos)
-                                                input("Enter para Continuar...")
-                                            elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
-                            else:
-                                print("El Torneo: {} es Individual".format(nombre_torneo))
-                                apodo = input("Ingrese el Apodo del Jugador: ")
-                                validar_jugador_en_torneo = modulo_utilerias.validar_jugador_en_torneo(apodo, nombre_torneo, racing_inscritos, champions_inscritos, smash_inscritos)
-                                if validar_jugador_en_torneo == True:
-                                    print("\n-------------------------------------------------------\nEl Jugador Ya Se Encuentra Registrado en Este Torneo")
-                                else:
-                                    validar_jugador_en_registro = modulo_utilerias.validar_jugador(jugadores, apodo)
-                                    if validar_jugador_en_registro == False:
-                                        print("\n-------------------------------------------------------\nEl Jugador No se Encuentra Registrado")
-                                    else:
-                                        while confirmar.lower() != "s" and confirmar.lower() != "n":
-                                            confirmar = input("\n-------------------------------------------------------\nConfirmar Registro del Jugador: {} en el Torneo: {} (SI = S / NO = N): ".format(apodo, nombre_torneo))
-                                            if confirmar.lower() == "s":
-                                                for i, jugador in enumerate(jugadores):
-                                                    if jugador["apodo"] == apodo:
-                                                        indice = i
-                                                if nombre_torneo == "Racing Rivals":
-                                                    racing_inscritos.append(jugadores[indice])
-                                                    racing_resultados.append(jugadores[indice])
-                                                    print(racing_inscritos)
-                                                    jugadores[indice]["torneos"].append(nombre_torneo)
-                                                    if len(racing_inscritos) == TORNEO_INDIVIDUAL:
-                                                        for torneo in torneos_disponibles:
-                                                            if torneo["datos"][0] == nombre_torneo:
-                                                                torneo["estado"] = "Cerrado"
-                                                elif nombre_torneo == "Champions Cup":
-                                                    champions_inscritos.append(jugadores[indice])
-                                                    champions_resultados.append(jugadores[indice])
-                                                    jugadores[indice]["torneos"].append(nombre_torneo)
-                                                    if len(champions_inscritos) == TORNEO_INDIVIDUAL:
-                                                        for torneo in torneos_disponibles:
-                                                            if torneo["datos"][0] == nombre_torneo:
-                                                                torneo["estado"] = "Cerrado"
-                                                elif nombre_torneo == "Smash Showdown":
-                                                    smash_inscritos.append(jugadores[indice])
-                                                    smash_resultados.append(jugadores[indice])
-                                                    jugadores[indice]["torneos"].append(nombre_torneo)
-                                                    if len(smash_inscritos) == TORNEO_INDIVIDUAL:
-                                                        for torneo in torneos_disponibles:
-                                                            if torneo["datos"][0] == nombre_torneo:
-                                                                torneo["estado"] = "Cerrado"
-                                                mostrar_jugadores_inscritos_torneo(nombre_torneo, racing_inscritos, champions_inscritos, smash_inscritos)
-                                                input("Enter para Continuar...")
-                                            elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
-            preguntar = ""
-            while preguntar.lower() != "s" and preguntar.lower() != "n":
-                preguntar = input("\n-------------------------------------------------------\n¿Desea Continuar Inscribiendo otro Jugador/Equipo en un Torneo? (SI = S / NO = N): ")
-                if preguntar.lower() == "s":
-                    validacion = True
-                elif preguntar.lower() == "n": validacion = False
-    else:
+def inscribir() -> None:
+    if len(jugadores.retornar_lista_jugadores()) < 1:
         print("\n-------------------------------------------------------\nEl Registro de Jugadores Esta Vacio")
+    else:
+        mostrar_torneos_activos()
+        nombre_torneo = input("Ingrese el Nombre del Torneo: ") 
+        if validar_torneo_existente(nombre_torneo) == False:
+            print("\n-------------------------------------------------------\nEl Nombre No Corresponde a Ningun Torneo Disponible")
+        elif retornar_estado_torneo(nombre_torneo) != "Inscripcion Abierta":
+                print("\n-------------------------------------------------------\nEl Torneo No se encuentra Disponible para Inscripcion")
+        else:
+            torneo = retornar_torneo(nombre_torneo)
+            if torneo["tipo"] == "equipo":
+                print("El Torneo: {} es de Equipos".format(nombre_torneo))
+                nombre_equipo = input("Ingrese el Nombre del Equipo: ")
+                if equipos.validar_equipo_registrado(nombre_equipo) == False:
+                    print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
+                elif validar_equipo_en_torneo(nombre_equipo, nombre_torneo) == True:
+                    print("\n-------------------------------------------------------\nEl Equipo Ya Se Encuentra Registrado en Este Torneo")
+                else:   
+                    confirmar = ""
+                    while confirmar.lower() not in ("s", "n"):
+                        confirmar = input("\n-------------------------------------------------------\nConfirmar Registro del Equipo: {} en el Torneo: {} (SI = S / NO = N): ".format(nombre_equipo, nombre_torneo)).lower()
+                        if confirmar == "s":
+                            
+                            equipo = equipos.retornar_datos_equipo(nombre_equipo)
+                            capitan = equipo["capitan"]
+                            miembros = equipo["miembros"]
+                                                
+                            for inscrito in inscritos:
+                                if inscrito.get("key") == torneo.get(("key")):
+                                    inscrito.append(equipo)
+                                    print(inscrito)
+                    
+                                                
+                                                        
+            #                                     if nombre_torneo == "ITSON Championship":
+            #                                         itson_inscritos.append(equipos[indice])
+            #                                         itson_resultados.append(equipos[indice])
+            #                                         print(itson_inscritos)
+            #                                         for jugador in jugadores:
+            #                                             if jugador["apodo"] == capitan:
+            #                                                 jugador["torneos"].append(nombre_torneo)
+            #                                         for miembro in miembros:
+            #                                             for jugador in jugadores:
+            #                                                 if jugador["apodo"] == miembro:
+            #                                                     jugador["torneos"].append(nombre_torneo)
+            #                                         if len(itson_inscritos) == TORNEO_EQUIPO:
+            #                                             for torneo in torneos_disponibles:
+            #                                                 if torneo["datos"][0] == nombre_torneo:
+            #                                                     torneo["estado"] = "Cerrado"
+                                                                
+                                                                
+                                                                
+            #                                     elif nombre_torneo == "Strike Showdown":
+            #                                         strike_inscritos.append(equipos[indice])
+            #                                         strike_resultados.append(equipos[indice])
+            #                                         print(strike_inscritos)
+            #                                         for jugador in jugadores:
+            #                                             if jugador["apodo"] == capitan:
+            #                                                 jugador["torneos"].append(nombre_torneo)
+            #                                         for miembro in miembros:
+            #                                             for jugador in jugadores:
+            #                                                 if jugador["apodo"] == miembro:
+            #                                                     jugador["torneos"].append(nombre_torneo)
+            #                                         if len(strike_inscritos) == TORNEO_EQUIPO:
+            #                                             for torneo in torneos_disponibles:
+            #                                                 if torneo["datos"][0] == nombre_torneo:
+            #                                                     torneo["estado"] = "Cerrado"
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+            #                                     mostrar_equipos_inscritos_torneo(nombre_torneo, itson_inscritos, strike_inscritos)
+            #                                     input("Enter para Continuar...")
+            #                                 elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
+            #                 else:
+            #                     print("El Torneo: {} es Individual".format(nombre_torneo))
+            #                     apodo = input("Ingrese el Apodo del Jugador: ")
+            #                     validar_jugador_en_torneo = modulo_utilerias.validar_jugador_en_torneo(apodo, nombre_torneo, racing_inscritos, champions_inscritos, smash_inscritos)
+            #                     if validar_jugador_en_torneo == True:
+            #                         print("\n-------------------------------------------------------\nEl Jugador Ya Se Encuentra Registrado en Este Torneo")
+            #                     else:
+            #                         validar_jugador_en_registro = modulo_utilerias.validar_jugador(jugadores, apodo)
+            #                         if validar_jugador_en_registro == False:
+            #                             print("\n-------------------------------------------------------\nEl Jugador No se Encuentra Registrado")
+            #                         else:
+            #                             while confirmar.lower() != "s" and confirmar.lower() != "n":
+            #                                 confirmar = input("\n-------------------------------------------------------\nConfirmar Registro del Jugador: {} en el Torneo: {} (SI = S / NO = N): ".format(apodo, nombre_torneo))
+            #                                 if confirmar.lower() == "s":
+            #                                     for i, jugador in enumerate(jugadores):
+            #                                         if jugador["apodo"] == apodo:
+            #                                             indice = i
+            #                                     if nombre_torneo == "Racing Rivals":
+            #                                         racing_inscritos.append(jugadores[indice])
+            #                                         racing_resultados.append(jugadores[indice])
+            #                                         print(racing_inscritos)
+            #                                         jugadores[indice]["torneos"].append(nombre_torneo)
+            #                                         if len(racing_inscritos) == TORNEO_INDIVIDUAL:
+            #                                             for torneo in torneos_disponibles:
+            #                                                 if torneo["datos"][0] == nombre_torneo:
+            #                                                     torneo["estado"] = "Cerrado"
+            #                                     elif nombre_torneo == "Champions Cup":
+            #                                         champions_inscritos.append(jugadores[indice])
+            #                                         champions_resultados.append(jugadores[indice])
+            #                                         jugadores[indice]["torneos"].append(nombre_torneo)
+            #                                         if len(champions_inscritos) == TORNEO_INDIVIDUAL:
+            #                                             for torneo in torneos_disponibles:
+            #                                                 if torneo["datos"][0] == nombre_torneo:
+            #                                                     torneo["estado"] = "Cerrado"
+            #                                     elif nombre_torneo == "Smash Showdown":
+            #                                         smash_inscritos.append(jugadores[indice])
+            #                                         smash_resultados.append(jugadores[indice])
+            #                                         jugadores[indice]["torneos"].append(nombre_torneo)
+            #                                         if len(smash_inscritos) == TORNEO_INDIVIDUAL:
+            #                                             for torneo in torneos_disponibles:
+            #                                                 if torneo["datos"][0] == nombre_torneo:
+            #                                                     torneo["estado"] = "Cerrado"
+            #                                     mostrar_jugadores_inscritos_torneo(nombre_torneo, racing_inscritos, champions_inscritos, smash_inscritos)
+            #                                     input("Enter para Continuar...")
+            #                                 elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
+            # preguntar = ""
+            # while preguntar.lower() != "s" and preguntar.lower() != "n":
+            #     preguntar = input("\n-------------------------------------------------------\n¿Desea Continuar Inscribiendo otro Jugador/Equipo en un Torneo? (SI = S / NO = N): ")
+            #     if preguntar.lower() == "s":
+            #         validacion = True
+            #     elif preguntar.lower() == "n": validacion = False
         
         
         
@@ -380,14 +382,14 @@ def mostrar_top_equipos_torneo(nombre_torneo:str, itson_resultados:list, strike_
                     print("\n----------------------------------------------------------------------------------------------------------------------\n")
                     
 
-def validar_torneo(torneos_disponibles:list, nombre_torneo:str) -> bool:
+def validar_torneo_existente(nombre_torneo:str) -> bool:
     for torneo in torneos_disponibles:
         if torneo["datos"][0] == nombre_torneo:
             return True
     return False
 
 
-def mostrar_torneos_activos(torneos_disponibles:list) -> None:
+def mostrar_torneos_activos() -> None:
     titulo = ["Nombre del Torneo", "Videojuego", "Tope de Jugadores"]
     print(f"\nTorneos Activos:\n-----------------------------------------------------------------------------------------\n{titulo[0]:^24}|{titulo[1]:^40}|{titulo[2]:^24}\n-----------------------------------------------------------------------------------------\n")
     for torneo in torneos_disponibles:
@@ -400,7 +402,7 @@ def mostrar_torneos_activos(torneos_disponibles:list) -> None:
         print("\n-----------------------------------------------------------------------------------------\n")
         
         
-def validar_equipo_en_torneo(nombre_equipo:str, nombre_torneo:str, itson_inscritos:list, strike_inscritos:list) -> bool:
+def validar_equipo_en_torneo(nombre_equipo:str, nombre_torneo:str) -> bool:
     if nombre_torneo == "ITSON Championship":
         for equipo in itson_inscritos:
             if equipo["nombre_equipo"] == nombre_equipo:
@@ -413,9 +415,9 @@ def validar_equipo_en_torneo(nombre_equipo:str, nombre_torneo:str, itson_inscrit
         return False
     
 
-def validar_estado_torneo(torneos_disponibles:list, nombre_torneo:str) -> str:
+def retornar_estado_torneo(nombre_torneo:str) -> str:
     for torneo in torneos_disponibles:
-        if torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Inscripción Abierta":
+        if torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Inscripcion Abierta":
             estado = "Inscripción Abierta"
         elif torneo["datos"][0] == nombre_torneo and torneo["estado"] == "Cerrado":
             estado = "Cerrado"
@@ -426,7 +428,7 @@ def validar_estado_torneo(torneos_disponibles:list, nombre_torneo:str) -> str:
     return estado
 
 
-def validar_jugador_en_torneo(apodo:str, nombre_torneo:str, racing_inscritos:list, champions_inscritos:list, smash_inscritos:list) -> bool:
+def validar_jugador_en_torneo(apodo:str, nombre_torneo:str) -> bool:
     if nombre_torneo == "Racing Rivals":
         for jugador in racing_inscritos:
             if jugador["apodo"] == apodo:
@@ -442,3 +444,8 @@ def validar_jugador_en_torneo(apodo:str, nombre_torneo:str, racing_inscritos:lis
             if jugador["apodo"] == apodo:
                 return True
         return False
+    
+def retornar_torneo(nombre_torneo:str):
+    for torneo in torneos_disponibles:
+        if torneo["nombre"] == nombre_torneo:
+            return torneo

@@ -1,5 +1,4 @@
 import utilerias, jugadores
-
 equipos = list()
 
 def registrar() -> None:
@@ -22,8 +21,7 @@ def registrar() -> None:
                     for miembro in miembros:
                         if miembro == capitan:
                             print("\n-------------------------------------------------------\nEl Capitan no Puede ser un Miembro del Equipo")
-                        else:
-                            if jugadores.validar_jugador_registrado(miembro) == False:
+                        elif jugadores.validar_jugador_registrado(miembro) == False:
                                 print("\n-------------------------------------------------------\nEl Jugador: {} no se Encuentra Registrado en la Lista de Jugadores".format(miembro))
                     else:
                         confirmar = ""
@@ -43,7 +41,6 @@ def registrar() -> None:
                                 input("Enter para Continuar...")
 
 
-
 def mostrar() -> None:
     if len(equipos) < 1:
         print("\n-------------------------------------------------------\nEl Registro de Equipos Esta Vacio")
@@ -60,7 +57,6 @@ def mostrar() -> None:
         print("Cantidad Total de Equipos Registrados: {}\n".format(len(equipos)))
     
     
-    
 def mostrar_equipo_especifico(nombre_equipo:str):
     for equipo in equipos:
         if equipo["nombre_equipo"] == nombre_equipo:
@@ -70,7 +66,6 @@ def mostrar_equipo_especifico(nombre_equipo:str):
                     print(miembro)
                 else: print("{}".format(miembro), end=", ")
             return equipo
-
 
 
 def actualizar() -> None:
@@ -128,7 +123,6 @@ def actualizar() -> None:
                     print("\n-------------------------------------------------------\nOpcion no Valida, Ingrese una del 1 al 2")            
 
 
-
 def eliminar() -> None:
     if len(equipos) < 1:
         print("\n-------------------------------------------------------\nNo se ha Registrado a Ningun Equipo")
@@ -149,7 +143,6 @@ def eliminar() -> None:
                 elif confirmar == "n": print("\n-------------------------------------------------------\nEliminacion de Equipo Cancelada")
     
         
-
 def validar_equipo_registrado(nombre_equipo:str) -> bool:
     for equipo in equipos:
         if equipo["nombre_equipo"] == nombre_equipo:
@@ -168,3 +161,6 @@ def validar_miembro_equipo_actual(equipo:dict, nuevo_miembro:str) -> bool:
         if nuevo_miembro == miembro:
             return True
     return False
+
+def retornar_lista_equipos():
+    return equipos
