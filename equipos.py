@@ -3,6 +3,7 @@ import utilerias, jugadores
 equipos = list()
 jugadores = jugadores.retornar_lista_jugadores()
 
+
 def registrar() -> None:
     if len(jugadores) > 1:
         nombre_equipo = input("Ingrese el Nombre del Equipo: ")
@@ -47,6 +48,7 @@ def registrar() -> None:
                             elif confirmar.lower() == "n": print("\n-------------------------------------------------------\nRegistro de Equipo Cancelado")
     if len(jugadores) <= 1:
         print("\n-------------------------------------------------------\nNo se Cuenta Con el Minimo de Jugadores Registrado para un Crear un Equipo")
+
 
 def mostrar() -> None:
     if len(equipos) > 0:
@@ -148,9 +150,7 @@ def actualizar() -> None:
                             print("\n-------------------------------------------------------\nOpcion no Valida, Ingrese una del 1 al 2")
                             continue
     elif len(equipos) == 0:
-        print("\n-------------------------------------------------------\nNo se ha Registrado a Ningun Equipo")
-                    
-
+        print("\n-------------------------------------------------------\nNo se ha Registrado a Ningun Equipo")              
 
 
 def eliminar() -> None:
