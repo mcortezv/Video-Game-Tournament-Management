@@ -1,4 +1,4 @@
-import torneos, random, utilerias, equipos, jugadores
+import jugadores, equipos, torneos, utilerias, random
 
 emparejamientos = {"itson": list(), 
          "racing": list(), 
@@ -13,6 +13,7 @@ fases = {"itson": {"numero": 1, "resultados_registrados": None},
          "champions": {"numero": 1, "resultados_registrados": None}, 
          "smash": {"numero": 1, "resultados_registrados": None}
          }
+
 
 def generar() -> None:
     nombre_torneo = utilerias.pedir_dato("Ingrese el Nombre del Torneo: ")
@@ -104,8 +105,7 @@ def registrar_resultado() -> None:
                 while preguntar.lower() not in ("s", "n"):
                     preguntar = input("\n-------------------------------------------------------\n¿Desea Generar Emparejamientos para Otro Torneo o Fase? (SI = S / NO = N): ").lower()
                     if preguntar == "s":
-                        generar()     
-                       
+                        generar()                         
 
 
 def mostrar_emparejamientos(torneo:str) -> None:

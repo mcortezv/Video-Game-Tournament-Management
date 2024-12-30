@@ -1,5 +1,5 @@
-import jugadores, equipos, textwrap, utilerias
-TORNEO_INDIVIDUAL = 4
+import jugadores, equipos, utilerias, textwrap
+TORNEO_INDIVIDUAL = 16
 TORNEO_EQUIPO = 8
 
 torneos_disponibles = {

@@ -1,36 +1,5 @@
 import utilerias
-jugadores = [{"id": id,
-                            "nombre": "q",
-                            "apodo": "q",
-                            "carrera": "q",
-                            "puntos": 0,
-                            "victorias": 0,
-                            "derrotas": 0,
-                            "torneos": []},
-                 {"id": id,
-                            "nombre": "q",
-                            "apodo": "w",
-                            "carrera": "q",
-                            "puntos": 0,
-                            "victorias": 0,
-                            "derrotas": 0,
-                            "torneos": []},
-                 {"id": id,
-                            "nombre": "q",
-                            "apodo": "e",
-                            "carrera": "q",
-                            "puntos": 0,
-                            "victorias": 0,
-                            "derrotas": 0,
-                            "torneos": []},
-                 {"id": id,
-                            "nombre": "q",
-                            "apodo": "r",
-                            "carrera": "q",
-                            "puntos": 0,
-                            "victorias": 0,
-                            "derrotas": 0,
-                            "torneos": []}]
+jugadores = list()
 
 def registrar() -> None:
     apodo = utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")

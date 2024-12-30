@@ -1,4 +1,4 @@
-def pedir_dato(texto:str) -> str:
+def pedir_dato(texto:str) -> None:
     while True:
         dato_entrada = input(texto)
         if dato_entrada.strip(): 

@@ -1,4 +1,4 @@
-import utilerias, jugadores
+import jugadores, utilerias
 equipos = list()
 
 def registrar() -> None:
@@ -57,7 +57,7 @@ def mostrar() -> None:
         print("Cantidad Total de Equipos Registrados: {}\n".format(len(equipos)))
     
     
-def mostrar_equipo_especifico(nombre_equipo:str):
+def mostrar_equipo_especifico(nombre_equipo:str) -> dict:
     for equipo in equipos:
         if equipo["nombre_equipo"] == nombre_equipo:
             print("\n----------------Miembros Actuales----------------------\nCapitan: {} \nMiembros: ".format(equipo["capitan"]), end="")
@@ -162,5 +162,6 @@ def validar_miembro_equipo_actual(equipo:dict, nuevo_miembro:str) -> bool:
             return True
     return False
 
-def retornar_lista_equipos():
+
+def retornar_lista_equipos() -> list:
     return equipos
