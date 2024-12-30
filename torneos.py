@@ -1,5 +1,5 @@
-import jugadores, equipos, textwrap
-TORNEO_INDIVIDUAL = 16 
+import jugadores, equipos, textwrap, utilerias
+TORNEO_INDIVIDUAL = 4
 TORNEO_EQUIPO = 8
 
 torneos_disponibles = {
@@ -23,7 +23,7 @@ def inscribir() -> None:
         print("\n-------------------------------------------------------\nEl Registro de Jugadores Esta Vacio")
     else:
         mostrar_torneos_activos()
-        nombre_torneo = input("Ingrese el Nombre del Torneo: ") 
+        nombre_torneo = utilerias.pedir_dato("Ingrese el Nombre del Torneo: ") 
         if validar_torneo_existente(nombre_torneo) == False:
             print("\n-------------------------------------------------------\nEl Nombre No Corresponde a Ningun Torneo Disponible")
         elif retornar_estado_torneo(nombre_torneo) != "Inscripcion Abierta":
@@ -33,7 +33,7 @@ def inscribir() -> None:
             confirmar = ""
             if torneos_disponibles[torneo]["tipo"] == "Equipos":
                 print("El Torneo: {} es de Equipos".format(nombre_torneo))
-                nombre_equipo = input("Ingrese el Nombre del Equipo: ")
+                nombre_equipo = utilerias.pedir_dato("Ingrese el Nombre del Equipo: ")
                 if equipos.validar_equipo_registrado(nombre_equipo) == False:
                     print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
                 elif validar_participante_en_torneo(nombre_equipo, torneo) == True:
@@ -55,7 +55,7 @@ def inscribir() -> None:
                         elif confirmar == "n": print("\n-------------------------------------------------------\nRegistro Cancelado")
             elif torneos_disponibles[torneo]["tipo"] == "Jugadores":
                 print("El Torneo: {} es Individual".format(nombre_torneo))
-                apodo = input("Ingrese el Apodo del Jugador: ")
+                apodo = utilerias.pedir_dato("Ingrese el Apodo del Jugador: ")
                 if jugadores.validar_jugador_registrado(apodo) == False:
                     print("\n-------------------------------------------------------\nEl Jugador No se Encuentra Registrado")
                 elif validar_participante_en_torneo(apodo, torneo) == True:
@@ -117,7 +117,7 @@ def mostrar_participantes_inscritos_torneo(torneo:str) -> None:
     if len(registros[torneo]["inscritos"]) < 1:
         print("\n-------------------------------------------------------\nNo se han Registrado Participantes en este Torneo")
     else:
-        lista_ordenada = sorted(registros[torneo]["inscritos"], key = lambda x: x['puntos'], reverse = True)
+        lista_ordenada = sorted(registros[torneo]["inscritos"], key = lambda x: x["puntos"], reverse = True)
         print("\nNombre del Torneo: {}".format(torneos_disponibles[torneo]["nombre"]))
         if torneos_disponibles[torneo]["tipo"] == "Jugadores":
             print(f"\n----------------------------------------------------------------------------------------------------------------------\n{"Nombre":^20}|{"Apodo":^20}|{"Carrera":^40}|{"Puntos":^10}|{"Victorias":^12}|{"Derrotas":^10}\n----------------------------------------------------------------------------------------------------------------------\n")
@@ -140,33 +140,14 @@ def mostrar_participantes_inscritos_torneo(torneo:str) -> None:
 
 
 def mostrar_clasificacion() -> None:
-    nombre_torneo = input("Ingrese el Nombre del Torneo: ")
+    nombre_torneo = utilerias.pedir_dato("Ingrese el Nombre del Torneo: ")
     if validar_torneo_existente(nombre_torneo) == False:
         print("\n-------------------------------------------------------\nEl Nombre No Corresponde a Ningun Torneo Disponible")
-    else:
-        if retornar_estado_torneo(nombre_torneo) != "Finalizado":
-            print("\n-------------------------------------------------------\nAun No se Puede Ver la Clasificacion de Este Torneo ya que se encuentra en Estado: {}".format(retornar_estado_torneo(nombre_torneo)))
-        torneo = retornar_torneo(nombre_torneo)
-        if len(registros[torneo]["resultados"]) < 1:
-                print("\n-------------------------------------------------------\nNo se han Registrado Participantes en este Torneo")
-        torneo_ordenado = sorted(registros[torneo]["resultados"], key = lambda x: x["puntos"], reverse = True)
-        print("\nNombre del Torneo: {}".format(nombre_torneo))
-        if torneos_disponibles[torneo]["tipo"] == "Jugadores":
-            print(f"\n----------------------------------------------------------------------------------------------------------------------\n{"Nombre":^20}|{"Apodo":^20}|{"Carrera":^40}|{"Puntos":^10}|{"Victorias":^12}|{"Derrotas":^10}\n----------------------------------------------------------------------------------------------------------------------\n")
-            for jugador in torneo_ordenado:
-                print(f"{jugador["nombre"]:^20}|{jugador["apodo"]:^20}|{jugador["carrera"]:^40}|{jugador["puntos"]:^10}|{jugador["victorias"]:^12}|{jugador["derrotas"]:^10}")
-                print("\n----------------------------------------------------------------------------------------------------------------------\n")
-            input("Enter para Continuar...")
-        elif torneos_disponibles[torneo]["tipo"] == "Equipos":
-            print(f"\n----------------------------------------------------------------------------------------------------------------------\n{"Nombre Equipo":^20}|{"Capitan":^20}|{"Puntos":^10}|{"Victorias":^12}|{"Derrotas":^10}|\t{"Miembros":<40}\n----------------------------------------------------------------------------------------------------------------------\n")
-            for equipo in torneo_ordenado:
-                print(f"{equipo["nombre_equipo"]:^20}|{equipo["capitan"]:^20}|{equipo["puntos"]:^10}|{equipo["victorias"]:^12}|{equipo["derrotas"]:^10}|", end="\t")
-                for miembro in equipo["miembros"]:
-                    if equipo["miembros"] == 1:
-                        print(miembro)
-                    else: print("{}".format(miembro), end=", ")
-                print("\n----------------------------------------------------------------------------------------------------------------------\n")
-            input("Enter para Continuar...")
+    elif retornar_estado_torneo(nombre_torneo) != "Finalizado":
+        print("\n-------------------------------------------------------\nAun No se Puede Ver la Clasificacion de Este Torneo ya que se encuentra en Estado: {}".format(retornar_estado_torneo(nombre_torneo)))
+    else: 
+        mostrar_participantes_inscritos_torneo(retornar_torneo(nombre_torneo))
+        input("Enter para Continuar...")
     preguntar = ""
     while preguntar.lower() not in ("s", "n"):
         preguntar = input("\n-------------------------------------------------------\n¿Desea Ver la Clasificacion de Otro Torneo? (SI = S / NO = N): ").lower()
@@ -176,16 +157,16 @@ def mostrar_clasificacion() -> None:
 
 
 def mostrar_top_torneo() -> None:
-    nombre_torneo = input("Ingrese el Nombre del Torneo: ")
+    nombre_torneo = utilerias.pedir_dato("Ingrese el Nombre del Torneo: ")
     if validar_torneo_existente(nombre_torneo) == False:
         print("\n-------------------------------------------------------\nEl Nombre No Corresponde a Ningun Torneo Disponible")
+    elif retornar_estado_torneo(nombre_torneo) != "Finalizado":
+        print("\n-------------------------------------------------------\nAun No se Puede Ver la Clasificacion de Este Torneo ya que se encuentra en Estado: {}".format(retornar_estado_torneo(nombre_torneo)))
     else:
-        if retornar_estado_torneo(nombre_torneo) != "Finalizado":
-            print("\n-------------------------------------------------------\nAun No se Puede Ver la Clasificacion de Este Torneo ya que se encuentra en Estado: {}".format(retornar_estado_torneo(nombre_torneo)))
         torneo = retornar_torneo(nombre_torneo)
         if len(registros[torneo]["resultados"]) < 1:
                 print("\n-------------------------------------------------------\nNo se han Registrado Participantes en este Torneo")
-        torneo_ordenado = sorted(registros[torneo]["resultados"], key = lambda x: x["puntos"], reverse = True)
+        torneo_ordenado = sorted(registros[torneo]["inscritos"], key = lambda x: x["puntos"], reverse = True)
         print("\nNombre del Torneo: {}".format(nombre_torneo))
         if torneos_disponibles[torneo]["tipo"] == "Jugadores":
             print(f"\n----------------------------------------------------------------------------------------------------------------------\n{"Nombre":^20}|{"Apodo":^20}|{"Carrera":^40}|{"Puntos":^10}|{"Victorias":^12}|{"Derrotas":^10}\n----------------------------------------------------------------------------------------------------------------------\n")

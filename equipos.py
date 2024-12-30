@@ -5,15 +5,15 @@ def registrar() -> None:
     if len(jugadores.retornar_lista_jugadores()) <= 1:
         print("\n-------------------------------------------------------\nNo se Cuenta Con el Minimo de Jugadores Registrado para un Crear un Equipo")
     else:
-        nombre_equipo = input("Ingrese el Nombre del Equipo: ")
+        nombre_equipo = utilerias.pedir_dato("Ingrese el Nombre del Equipo: ")
         if validar_equipo_registrado(nombre_equipo) == True:
             print("\n-------------------------------------------------------\nEl Equipo ya se Encuentra Registrado")
         else:
-            capitan = input("Ingrese el Apodo del Capitan: ")
+            capitan = utilerias.pedir_dato("Ingrese el Apodo del Capitan: ")
             if jugadores.validar_jugador_registrado(capitan) == False:
                 print("\n-------------------------------------------------------\nEl Capitan no se Encuentra en el Registro de Jugadores")
             else:
-                apodo_miembros = input("Ingrese los Apodos de los Miembros Separados por Comas: ")
+                apodo_miembros = utilerias.pedir_dato("Ingrese los Apodos de los Miembros Separados por Comas: ")
                 miembros = [apodo.strip() for apodo in apodo_miembros.split(",")]
                 if len(miembros) > 7:
                     print("\n-------------------------------------------------------\nEl Maximo de Integrantes por Equipo es de 8")
@@ -72,7 +72,7 @@ def actualizar() -> None:
     if len(equipos) < 1:
         print("\n-------------------------------------------------------\nNo se ha Registrado a Ningun Equipo") 
     else:
-        nombre_equipo = input("Ingrese el Nombre del Equipo a Actualizar: ")
+        nombre_equipo = utilerias.pedir_dato("Ingrese el Nombre del Equipo a Actualizar: ")
         if validar_equipo_registrado(nombre_equipo) == False:
             print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
         else:
@@ -81,7 +81,7 @@ def actualizar() -> None:
             while opcion not in ("1", "2"):
                 opcion = input("\nQue Desea Hacer?: \n1. Agregar Miembro\n2. Eliminar Miembro\n")
                 if opcion == "1":
-                    nuevo_miembro = input("Ingrese el Apodo del Jugador a Agregar: ")
+                    nuevo_miembro = utilerias.pedir_dato("Ingrese el Apodo del Jugador a Agregar: ")
                     if jugadores.validar_jugador_registrado(nuevo_miembro) == False: 
                         print("\n-------------------------------------------------------\nEl Jugador No se Encuentra en el Registro de Jugadores")
                     elif nuevo_miembro == equipo["capitan"]: 
@@ -99,7 +99,7 @@ def actualizar() -> None:
                             elif confirmar == "n": 
                                 print("\n-------------------------------------------------------\nActualizacion de Equipo Cancelada")
                 elif opcion == "2": 
-                    miembro_eliminar = input("Ingrese el Apodo del Jugador a Eliminar: ")
+                    miembro_eliminar = utilerias.pedir_dato("Ingrese el Apodo del Jugador a Eliminar: ")
                     if jugadores.validar_jugador_registrado(miembro_eliminar) == False: 
                         print("\n-------------------------------------------------------\nEl Jugador No se Encuentra en el Registro de Jugadores")
                     elif validar_miembro_equipo_actual(equipo, miembro_eliminar) == False: 
@@ -127,7 +127,7 @@ def eliminar() -> None:
     if len(equipos) < 1:
         print("\n-------------------------------------------------------\nNo se ha Registrado a Ningun Equipo")
     else:
-        nombre_equipo = input("Ingrese el Nombre del Equipo a Eliminar: ")
+        nombre_equipo = utilerias.pedir_dato("Ingrese el Nombre del Equipo a Eliminar: ")
         if validar_equipo_registrado(nombre_equipo) == False:
             print("\n-------------------------------------------------------\nEl Equipo No se Encuentra Registrado")
         else:
