@@ -2,15 +2,6 @@
 
 This project is an interactive system to manage tournaments, allowing registration of players and teams, creating matchups, recording results, and displaying rankings. Designed mainly for competitive video games, the system can be adapted to various contexts.
 
----
-
-## Table of Contents
-- [Main Features](#main-features)
-- [Project Files](#project-files)
-- [Installation and Execution](#installation-and-execution)
-- [Usage](#usage)
-- [License](#license)
-
 ## Main Features
 
 ### 1. **Player and Team Management**
