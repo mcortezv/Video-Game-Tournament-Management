@@ -48,7 +48,7 @@ This project is an interactive system to manage tournaments, allowing registrati
 ### 2. **Installation**: Clone this repository:
 
 ```bash
-git clone https://github.com/mcortezv/video-game-tournament-management.git
+git clone https://github.com/mcortezv/Video-Game-Tournament-Management
 ```
 ### 3. **Execution**: Run the main file:
 
