@@ -39,7 +39,6 @@ def main():
             torneos.mostrar_top_torneo()
         else: 
             print("Opcion no Valida, Ingrese una del 1 al 13")
-            continue
 
 if __name__ == "__main__":
     main()
