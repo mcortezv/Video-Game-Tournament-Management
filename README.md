@@ -1,4 +1,4 @@
-# Project: Tournament Management System
+# Tournament Management System
 
 This project is an interactive system to manage tournaments, allowing registration of players and teams, creating matchups, recording results, and displaying rankings. Designed mainly for competitive video games, the system can be adapted to various contexts.
 
